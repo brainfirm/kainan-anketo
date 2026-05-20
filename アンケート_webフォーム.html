@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海南市 障害者アンケート調査</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #f5f5f0; color: #1a1a1a; font-size: 15px; line-height: 1.7; }
+  .header { background: #1a4a8a; color: white; padding: 2rem 1.5rem; text-align: center; }
+  .header h1 { font-size: 1.1rem; font-weight: 500; line-height: 1.6; }
+  .header p { font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.85; }
+  .container { max-width: 780px; margin: 2rem auto; padding: 0 1rem 4rem; }
+  .notice { background: #fff; border: 0.5px solid #d0cdc5; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: #444; }
+  .notice h2 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .section-title { font-size: 1rem; font-weight: 500; color: white; background: #1a4a8a; padding: 0.6rem 1rem; border-radius: 8px; margin: 2rem 0 1rem; }
+  .question-block { background: white; border: 0.5px solid #d0cdc5; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .question-label { font-size: 0.82rem; font-weight: 500; color: #1a4a8a; margin-bottom: 0.3rem; }
+  .question-text { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.9rem; line-height: 1.6; }
+  .sub-note { font-size: 0.8rem; color: #666; margin-bottom: 0.8rem; }
+  .options { display: flex; flex-direction: column; gap: 0.5rem; }
+  .options.horizontal { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
+  .option-label { display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; padding: 0.5rem 0.75rem; border-radius: 7px; border: 0.5px solid #d0cdc5; background: #fafaf8; font-size: 0.88rem; transition: background 0.15s, border-color 0.15s; }
+  .option-label:hover { background: #eef3fb; border-color: #a0b8d8; }
+  .option-label input { margin-top: 3px; accent-color: #1a4a8a; flex-shrink: 0; }
+  .option-label.horizontal-item { min-width: 130px; flex: 1 1 130px; }
+  input[type="number"], input[type="text"], textarea, select { width: 100%; padding: 0.5rem 0.75rem; border: 0.5px solid #d0cdc5; border-radius: 7px; font-size: 0.9rem; font-family: inherit; background: #fafaf8; color: #1a1a1a; outline: none; transition: border-color 0.15s; }
+  input[type="number"]:focus, input[type="text"]:focus, textarea:focus, select:focus { border-color: #1a4a8a; background: white; }
+  input[type="number"] { width: 100px; }
+  textarea { min-height: 100px; resize: vertical; }
+  .input-row { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
+  .grid-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .grid-table th, .grid-table td { border: 0.5px solid #d0cdc5; padding: 0.5rem 0.4rem; text-align: center; }
+  .grid-table th { background: #f0eeea; font-weight: 500; }
+  .grid-table td:first-child { text-align: left; padding-left: 0.75rem; }
+  .grid-table td label { display: flex; justify-content: center; }
+  .sub-block { background: #f4f7fc; border: 0.5px dashed #a0b8d8; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; }
+  .sub-block .question-label { color: #2a5fa0; }
+  .btn-submit { display: block; width: 100%; padding: 1rem; background: #1a4a8a; color: white; border: none; border-radius: 10px; font-size: 1rem; font-family: inherit; cursor: pointer; margin-top: 2rem; transition: background 0.15s; }
+  .btn-submit:hover { background: #163d75; }
+  .progress-bar { height: 5px; background: #d0cdc5; border-radius: 3px; margin-bottom: 1.5rem; }
+  .progress-fill { height: 100%; background: #1a4a8a; border-radius: 3px; width: 0%; transition: width 0.3s; }
+  .contact-box { background: #f0eeea; border-radius: 8px; padding: 1rem; font-size: 0.82rem; color: #555; margin-top: 2rem; }
+  .required { color: #c0392b; font-size: 0.8rem; margin-left: 4px; }
+  .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.4rem; }
+  .service-item { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.83rem; padding: 0.4rem 0.6rem; border-radius: 6px; border: 0.5px solid #d0cdc5; background: #fafaf8; cursor: pointer; transition: background 0.12s; }
+  .service-item:hover { background: #eef3fb; }
+  .service-item input { accent-color: #1a4a8a; margin-top: 2px; flex-shrink: 0; }
+  @media (max-width: 600px) {
+    .options.horizontal { flex-direction: column; }
+    .grid-table { font-size: 0.75rem; }
+    .grid-table th, .grid-table td { padding: 0.4rem 0.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>第３期海南市障害者基本計画並びに<br>第６期海南市障害福祉計画及び<br>第２期海南市障害児福祉計画<br>策定のためのアンケート調査</h1>
+  <p>令和２年８月　海南市長 神出政巳</p>
+</div>
+
+<div class="container">
+
+  <div class="notice">
+    <h2>ご回答にあたってのお願い</h2>
+    <p>このアンケートは、障害者手帳をお持ちの方や、障害児の福祉サービスをご利用の児童の保護者の中から無作為に2,000人の方を選ばせていただき、新しい計画を策定するための基礎資料とするために実施するものです。プライバシーの保護に万全を期しておりますので、ご協力をお願い申し上げます。</p>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+  <form id="surveyForm" onsubmit="handleSubmit(event)">
+
+  <!-- 問1 -->
+  <div class="question-block">
+    <div class="question-label">問１</div>
+    <div class="question-text">お答えいただくのは、どなたですか。<span class="required">（１つだけ）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q1" value="1"> 本人（この調査票が郵送された宛名の方）</label>
+      <label class="option-label"><input type="radio" name="q1" value="2"> 本人の家族</label>
+      <label class="option-label"><input type="radio" name="q1" value="3"> 家族以外の介助者</label>
+    </div>
+  </div>
+
+  <div class="section-title">あなた（宛名の方）の性別・年齢・ご家族などについて</div>
+
+  <!-- 問2 -->
+  <div class="question-block">
+    <div class="question-label">問２</div>
+    <div class="question-text">あなたの年齢をお答えください。（回答日現在）</div>
+    <div class="input-row">満 <input type="number" name="q2" min="0" max="120" placeholder="例：35"> 歳</div>
+  </div>
+
+  <!-- 問3 -->
+  <div class="question-block">
+    <div class="question-label">問３</div>
+    <div class="question-text">あなたの性別をお答えください。<span class="required">（１つだけ）</span></div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q3" value="1"> 男性</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q3" value="2"> 女性</label>
+    </div>
+  </div>
+
+  <!-- 問4 -->
+  <div class="question-block">
+    <div class="question-label">問４</div>
+    <div class="question-text">あなたがお住まいの地域はどこですか。<span class="required">（１つだけ）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q4" value="1"> 海南市西部地区（黒江・船尾・日方・内海・大野・亀川）</label>
+      <label class="option-label"><input type="radio" name="q4" value="2"> 海南市東部地区（巽・北野上・中野上・南野上）</label>
+      <label class="option-label"><input type="radio" name="q4" value="3"> 海南市下津町地区</label>
+    </div>
+  </div>
+
+  <!-- 問5 -->
+  <div class="question-block">
+    <div class="question-label">問５</div>
+    <div class="question-text">現在、あなたが一緒に暮らしている方は、どなたですか。<span class="required">（あてはまるものすべてに○）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="checkbox" name="q5" value="1"> 父母・祖父母・兄弟姉妹</label>
+      <label class="option-label"><input type="checkbox" name="q5" value="2"> 配偶者（夫または妻）</label>
+      <label class="option-label"><input type="checkbox" name="q5" value="3"> 子ども</label>
+      <label class="option-label"><input type="checkbox" name="q5" value="4"> その他</label>
+      <label class="option-label"><input type="checkbox" name="q5" value="5"> いない（一人で暮らしている）</label>
+    </div>
+    <div class="sub-note" style="margin-top:0.5rem">※グループホーム、福祉施設等を利用されている方は「いない（一人で暮らしている）」を選択してください。</div>
+  </div>
+
+  <!-- 問6 -->
+  <div class="question-block">
+    <div class="question-label">問６</div>
+    <div class="question-text">日常生活で、次のことをどのようにしていますか。それぞれにお答えください。</div>
+    <div style="overflow-x:auto">
+    <table class="grid-table">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>ひとりでできる</th>
+          <th>一部介助が必要</th>
+          <th>全部介助が必要</th>
+        </tr>
+      </thead>
+      <tbody id="q6table"></tbody>
+    </table>
+    </div>
+    <div class="sub-block" id="q6sub" style="display:none">
+      <div class="question-label">問６-１（問６で一部または全部介助を選択した方へ）</div>
+      <div class="question-text" style="font-size:0.9rem">あなたを介助してくれる方は主にどなたですか。<span class="required">（あてはまるものすべてに○）</span></div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q6_1" value="1"> 父母・祖父母・兄弟姉妹</label>
+        <label class="option-label"><input type="checkbox" name="q6_1" value="2"> 配偶者（夫または妻）</label>
+        <label class="option-label"><input type="checkbox" name="q6_1" value="3"> 子ども</label>
+        <label class="option-label"><input type="checkbox" name="q6_1" value="4"> ホームヘルパーや施設の職員</label>
+        <label class="option-label"><input type="checkbox" name="q6_1" value="5"> その他の人（ボランティア等）</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">あなたの障害の状況について</div>
+
+  <!-- 問7 -->
+  <div class="question-block">
+    <div class="question-label">問７</div>
+    <div class="question-text">あなたは身体障害者手帳をお持ちですか。<span class="required">（１つだけ）</span></div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q7" value="1"> １級</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q7" value="2"> ２級</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q7" value="3"> ３級</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q7" value="4"> ４級</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q7" value="5"> ５級</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q7" value="6"> ６級</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q7" value="7"> 持っていない</label>
+    </div>
+  </div>
+
+  <!-- 問8 -->
+  <div class="question-block">
+    <div class="question-label">問８</div>
+    <div class="question-text">あなたは療育手帳をお持ちですか。<span class="required">（１つだけ）</span></div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q8" value="A1"> A1</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q8" value="A2"> A2</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q8" value="B1"> B1</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q8" value="B2"> B2</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q8" value="5"> 知的障害があるが手帳を持っていない</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q8" value="6"> 持っていない</label>
+    </div>
+  </div>
+
+  <!-- 問9 -->
+  <div class="question-block">
+    <div class="question-label">問９</div>
+    <div class="question-text">あなたは精神障害者保健福祉手帳をお持ちですか。<span class="required">（１つだけ）</span></div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q9" value="1"> １級</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q9" value="2"> ２級</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q9" value="3"> ３級</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q9" value="4"> 精神障害があるが手帳を持っていない</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q9" value="5"> 持っていない</label>
+    </div>
+  </div>
+
+  <!-- 問11 -->
+  <div class="question-block">
+    <div class="question-label">問１１</div>
+    <div class="question-text">あなたは難病（指定難病）の認定を受けていますか。<span class="required">（１つだけ）</span></div>
+    <div class="sub-note">※難病（指定難病）とは、ALS（筋萎縮性側索硬化症）やパーキンソン病などの治療法が確立していない疾病をいいます。</div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q11" value="1"> 受けている</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q11" value="2"> 受けていない</label>
+    </div>
+  </div>
+
+  <!-- 問12 -->
+  <div class="question-block">
+    <div class="question-label">問１２</div>
+    <div class="question-text">あなたは発達障害として診断されたことがありますか。<span class="required">（１つだけ）</span></div>
+    <div class="sub-note">※発達障害とは、自閉症、アスペルガー症候群、学習障害、注意欠陥多動性障害などをいいます。</div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q12" value="1"> ある</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q12" value="2"> ない</label>
+    </div>
+  </div>
+
+  <!-- 問14 -->
+  <div class="question-block">
+    <div class="question-label">問１４</div>
+    <div class="question-text">あなたは現在医療的ケアを受けていますか。<span class="required">（１つだけ）</span></div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q14" value="1" onclick="showQ14Sub(true)"> 受けている</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q14" value="2" onclick="showQ14Sub(false)"> 受けていない</label>
+    </div>
+    <div class="sub-block" id="q14sub" style="display:none">
+      <div class="question-label">問１４-１（受けている方へ）</div>
+      <div class="question-text" style="font-size:0.9rem">あなたが現在受けている医療的ケアをお答えください。<span class="required">（あてはまるものすべてに○）</span></div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q14_1" value="1"> 気管切開</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="2"> 人工呼吸器（レスピレーター）</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="3"> 吸入</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="4"> 吸引</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="5"> 胃ろう・腸ろう</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="6"> 鼻腔経管栄養</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="7"> 中心静脈栄養（IVH）</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="8"> 透析</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="9"> カテーテル留置</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="10"> ストマ（人工肛門・人工膀胱）</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="11"> 服薬管理</label>
+        <label class="option-label"><input type="checkbox" name="q14_1" value="12"> その他</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">住まいや暮らしについて</div>
+
+  <!-- 問15 -->
+  <div class="question-block">
+    <div class="question-label">問１５</div>
+    <div class="question-text">最近の健康状態で、感じていることは何ですか。<span class="required">（あてはまるものすべてに○）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="checkbox" name="q15" value="1"> 体力の衰えを感じる</label>
+      <label class="option-label"><input type="checkbox" name="q15" value="2"> 何をしても疲れやすくなった</label>
+      <label class="option-label"><input type="checkbox" name="q15" value="3"> 肥満が気になる</label>
+      <label class="option-label"><input type="checkbox" name="q15" value="4"> 歯の具合がよくない</label>
+      <label class="option-label"><input type="checkbox" name="q15" value="5"> ふだんのストレスがたまっている</label>
+      <label class="option-label"><input type="checkbox" name="q15" value="6"> 物忘れがひどくなった</label>
+      <label class="option-label"><input type="checkbox" name="q15" value="7"> 気分が落ち込むことが多い</label>
+      <label class="option-label"><input type="checkbox" name="q15" value="8"> 特に感じていることはない</label>
+      <label class="option-label"><input type="checkbox" name="q15" value="9"> その他</label>
+    </div>
+  </div>
+
+  <!-- 問16 -->
+  <div class="question-block">
+    <div class="question-label">問１６</div>
+    <div class="question-text">あなたは現在どのように暮らしていますか。<span class="required">（１つだけ）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q16" value="1"> 一人で暮らしている</label>
+      <label class="option-label"><input type="radio" name="q16" value="2"> 家族と暮らしている</label>
+      <label class="option-label"><input type="radio" name="q16" value="3"> グループホームで暮らしている</label>
+      <label class="option-label"><input type="radio" name="q16" value="4"> 福祉施設（障害者支援施設、高齢者支援施設）で暮らしている</label>
+      <label class="option-label"><input type="radio" name="q16" value="5"> 病院に入院している</label>
+      <label class="option-label"><input type="radio" name="q16" value="6"> その他</label>
+    </div>
+  </div>
+
+  <!-- 問17 -->
+  <div class="question-block">
+    <div class="question-label">問１７</div>
+    <div class="question-text">あなたは今後３年以内にどのような暮らしをしたいと思いますか。<span class="required">（１つだけ）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q17" value="1"> 一般の住宅で一人暮らしをしたい</label>
+      <label class="option-label"><input type="radio" name="q17" value="2"> 家族と一緒に生活したい</label>
+      <label class="option-label"><input type="radio" name="q17" value="3"> グループホームなどを利用したい</label>
+      <label class="option-label"><input type="radio" name="q17" value="4"> 福祉施設（障害者支援施設、高齢者支援施設）で暮らしたい</label>
+      <label class="option-label"><input type="radio" name="q17" value="5"> その他</label>
+    </div>
+  </div>
+
+  <!-- 問18 -->
+  <div class="question-block">
+    <div class="question-label">問１８</div>
+    <div class="question-text">希望する暮らしを送るためには、どのような支援があればよいと思いますか。<span class="required">（あてはまるものすべてに○）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="checkbox" name="q18" value="1"> 在宅で医療ケアなどが適切に得られること</label>
+      <label class="option-label"><input type="checkbox" name="q18" value="2"> 障害者に適した住居の確保</label>
+      <label class="option-label"><input type="checkbox" name="q18" value="3"> 必要な在宅サービスが適切に利用できること</label>
+      <label class="option-label"><input type="checkbox" name="q18" value="4"> 生活訓練等の充実</label>
+      <label class="option-label"><input type="checkbox" name="q18" value="5"> 経済的な負担の軽減</label>
+      <label class="option-label"><input type="checkbox" name="q18" value="6"> 相談対応等の充実</label>
+      <label class="option-label"><input type="checkbox" name="q18" value="7"> 地域住民等の理解</label>
+      <label class="option-label"><input type="checkbox" name="q18" value="8"> コミュニケーションについての支援</label>
+      <label class="option-label"><input type="checkbox" name="q18" value="9"> その他</label>
+    </div>
+  </div>
+
+  <div class="section-title">日中活動や就労についてお聞きします。</div>
+
+  <!-- 問19 -->
+  <div class="question-block">
+    <div class="question-label">問１９</div>
+    <div class="question-text">あなたは、１週間にどの程度外出しますか。<span class="required">（１つだけ）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q19" value="1"> 毎日外出する</label>
+      <label class="option-label"><input type="radio" name="q19" value="2"> １週間に数回外出する</label>
+      <label class="option-label"><input type="radio" name="q19" value="3"> めったに外出しない</label>
+      <label class="option-label"><input type="radio" name="q19" value="4"> まったく外出しない</label>
+    </div>
+  </div>
+
+  <!-- 問23 -->
+  <div class="question-block">
+    <div class="question-label">問２３</div>
+    <div class="question-text">あなたは、平日の日中を主にどのように過ごしていますか。<span class="required">（１つだけ）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q23" value="1"> 会社勤めや自営業・家業などで収入を得て仕事をしている</label>
+      <label class="option-label"><input type="radio" name="q23" value="2"> ボランティアなど、収入を得ない仕事をしている</label>
+      <label class="option-label"><input type="radio" name="q23" value="3"> 専業主婦（主夫）をしている</label>
+      <label class="option-label"><input type="radio" name="q23" value="4"> 福祉施設、作業所等に通っている（就労継続支援Ａ型も含む）</label>
+      <label class="option-label"><input type="radio" name="q23" value="5"> 病院などのデイケアに通っている</label>
+      <label class="option-label"><input type="radio" name="q23" value="6"> リハビリテーションを受けている</label>
+      <label class="option-label"><input type="radio" name="q23" value="7"> 自宅で過ごしている</label>
+      <label class="option-label"><input type="radio" name="q23" value="8"> 入所している施設や病院等で過ごしている</label>
+      <label class="option-label"><input type="radio" name="q23" value="9"> 大学・専門学校・職業訓練校などに通っている</label>
+      <label class="option-label"><input type="radio" name="q23" value="10"> 特別支援学校（小中高等部）に通っている</label>
+      <label class="option-label"><input type="radio" name="q23" value="11"> 一般の高校・小中学校に通っている</label>
+      <label class="option-label"><input type="radio" name="q23" value="12"> 幼稚園・保育所・障害児通園施設などに通っている</label>
+      <label class="option-label"><input type="radio" name="q23" value="13"> その他</label>
+    </div>
+  </div>
+
+  <div class="section-title">相談相手についてお聞きします。</div>
+
+  <!-- 問25 -->
+  <div class="question-block">
+    <div class="question-label">問２５</div>
+    <div class="question-text">現在の生活で困っていることや不安に思っていることは何ですか。<span class="required">（○は５つまで）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="checkbox" name="q25" value="1"> 身の回りの介助や支援をする人がいない</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="2"> 一緒に暮らす人がいない</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="3"> 働くところがない</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="4"> 十分な収入が得られない</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="5"> 趣味や生きがいが見つけられない</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="6"> 生活をするうえで必要な情報が得られない</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="7"> 自分の健康や体力に自信がない</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="8"> 家族など介助者の健康状態が不安</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="9"> 同居の家族との関係</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="10"> 隣人などとの関係</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="11"> 必要な保健・福祉・医療サービスが受けられない</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="12"> 将来的に生活する住まい、または施設があるかどうか不安</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="13"> 特に困っていることはない</label>
+      <label class="option-label"><input type="checkbox" name="q25" value="14"> その他</label>
+    </div>
+  </div>
+
+  <!-- 問26 -->
+  <div class="question-block">
+    <div class="question-label">問２６</div>
+    <div class="question-text">あなたは、普段、悩みや困ったことをどなたに相談しますか。<span class="required">（あてはまるものすべてに○）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="checkbox" name="q26" value="1"> 家族や親せき</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="2"> 友人・知人</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="3"> 近所の人</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="4"> 職場の上司や同僚</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="5"> 施設の指導員など</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="6"> ホームヘルパーなどサービス事業所の人</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="7"> 障害者団体や家族会</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="8"> かかりつけの医師や看護師</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="9"> 病院のケースワーカーや介護保険のケアマネジャー</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="10"> 民生委員・児童委員</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="11"> 通園施設や保育所、幼稚園、学校の先生</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="12"> 相談支援事業所などの民間の相談窓口</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="13"> 行政機関の相談窓口</label>
+      <label class="option-label"><input type="checkbox" name="q26" value="14"> その他</label>
+    </div>
+  </div>
+
+  <div class="section-title">権利擁護についてお聞きします。</div>
+
+  <!-- 問34 -->
+  <div class="question-block">
+    <div class="question-label">問３４</div>
+    <div class="question-text">あなたは、障害があることで差別や嫌な思いをする（した）ことが、おおむね３年以内にありますか。<span class="required">（１つだけ）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q34" value="1"> ある</label>
+      <label class="option-label"><input type="radio" name="q34" value="2"> 少しある</label>
+      <label class="option-label"><input type="radio" name="q34" value="3"> ない</label>
+    </div>
+  </div>
+
+  <!-- 問35 -->
+  <div class="question-block">
+    <div class="question-label">問３５</div>
+    <div class="question-text">成年後見制度についてご存じですか。<span class="required">（１つだけ）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q35" value="1"> 名前も内容も知っている</label>
+      <label class="option-label"><input type="radio" name="q35" value="2"> 名前を聞いたことがあるが、内容は知らない</label>
+      <label class="option-label"><input type="radio" name="q35" value="3"> 名前も内容も知らない</label>
+    </div>
+  </div>
+
+  <div class="section-title">災害時の避難等についてお聞きします。</div>
+
+  <!-- 問36 -->
+  <div class="question-block">
+    <div class="question-label">問３６</div>
+    <div class="question-text">あなたは、火事や地震等の災害時に一人で避難できますか。<span class="required">（１つだけ）</span></div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q36" value="1"> できる</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q36" value="2"> できない</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q36" value="3"> わからない</label>
+    </div>
+  </div>
+
+  <!-- 問37 -->
+  <div class="question-block">
+    <div class="question-label">問３７</div>
+    <div class="question-text">家族が不在の場合や一人暮らしの場合、近所にあなたを助けてくれる人はいますか。<span class="required">（１つだけ）</span></div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q37" value="1"> いる</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q37" value="2"> いない</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q37" value="3"> わからない</label>
+    </div>
+  </div>
+
+  <!-- 問39 -->
+  <div class="question-block">
+    <div class="question-label">問３９</div>
+    <div class="question-text">障害のある人にとって住みよいまちをつくるために、どのようなことが必要だと考えますか。<span class="required">（○は５つまで）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="checkbox" name="q39" value="1"> 何でも相談できる窓口をつくるなど相談体制の充実</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="2"> サービス利用の手続きの簡素化</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="3"> 行政からの福祉に関する情報提供の充実</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="4"> 保健や福祉の専門的な人材の育成と資質の向上</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="5"> 参加しやすいスポーツ・サークル・文化活動の充実</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="6"> いろいろなボランティア活動の育成</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="7"> 在宅での生活や介助がしやすいよう、保健・医療・福祉のサービスの充実</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="8"> リハビリ・生活訓練・職業訓練などの通所施設の整備</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="9"> 地域でともに学べる保育・教育内容の充実</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="10"> 職業訓練の充実や働く場所の確保</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="11"> 障害の有無にかかわらず、市民同士がふれあう機会や場の充実</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="12"> 利用しやすい道路・建物などの整備・改善</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="13"> 障害に配慮した公営住宅や、グループホームの整備など、生活の場の確保</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="14"> 災害のときの避難誘導体制（緊急通報システムなど）の整備</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="15"> 差別や偏見をなくすための福祉教育や広報活動の充実</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="16"> 本人や家族の積極性</label>
+      <label class="option-label"><input type="checkbox" name="q39" value="17"> その他</label>
+    </div>
+  </div>
+
+  <div class="section-title">障害福祉サービス等の利用についてお聞きします。</div>
+
+  <!-- 問28 -->
+  <div class="question-block">
+    <div class="question-label">問２８</div>
+    <div class="question-text">あなたは障害支援区分の認定を受けていますか。<span class="required">（１つだけ）</span></div>
+    <div class="options horizontal">
+      <label class="option-label horizontal-item"><input type="radio" name="q28" value="1"> 区分１</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q28" value="2"> 区分２</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q28" value="3"> 区分３</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q28" value="4"> 区分４</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q28" value="5"> 区分５</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q28" value="6"> 区分６</label>
+      <label class="option-label horizontal-item"><input type="radio" name="q28" value="7"> 受けていない</label>
+    </div>
+  </div>
+
+  <!-- サービス一覧の説明 -->
+  <div class="question-block" style="background:#f4f7fc; border-color:#a0b8d8;">
+    <div class="question-label" style="color:#2a5fa0;">障害福祉サービス等一覧（問29〜31で使用）</div>
+    <div class="sub-note" style="margin-bottom:0.75rem">問29〜31では、下記のサービス番号を使ってお答えください。※33〜40のサービスは18歳未満の方のみ選択してください。</div>
+    <div id="serviceListDisplay" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:4px 12px; font-size:0.8rem; color:#333;"></div>
+  </div>
+
+  <!-- 問29 -->
+  <div class="question-block">
+    <div class="question-label">問２９</div>
+    <div class="question-text">現在利用しているサービスがあれば、そのサービス番号と今後３年以内の利用予定をお答えください。<span class="required">（主なものを５つまで）</span></div>
+    <div class="sub-note">※33〜40のサービスは18歳未満の方のみ選択してください。</div>
+    <div id="q29rows"></div>
+    <div style="margin-top:0.75rem; font-size:0.82rem; color:#555;">
+      ＜記入例＞現在、就労継続支援（B型）を利用し、今後増やす予定の場合 → サービス番号「16」を選択し、「増やす」を選択
+    </div>
+  </div>
+
+  <!-- 問30 -->
+  <div class="question-block">
+    <div class="question-label">問３０</div>
+    <div class="question-text">現在利用したいが利用できていないサービスがあれば、そのサービス番号と主な理由をお答えください。<span class="required">（主なものを５つまで）</span></div>
+    <div class="sub-note">※33〜40のサービスは18歳未満の方のみ選択してください。</div>
+    <div id="q30rows"></div>
+  </div>
+
+  <!-- 問31 -->
+  <div class="question-block">
+    <div class="question-label">問３１</div>
+    <div class="question-text">現在利用していないが、今後３年以内に新たに利用する予定のサービスがあれば、そのサービス番号をお答えください。<span class="required">（主なものを５つまで）</span></div>
+    <div class="sub-note">※33〜40のサービスは18歳未満の方のみ選択してください。</div>
+    <div id="q31rows"></div>
+    <div style="margin-top:0.75rem; font-size:0.82rem; color:#555;">
+      ＜記入例＞居宅介護（ホームヘルプ）と生活介護と移動支援を利用する場合 → 「1」「9」「26」を選択
+    </div>
+  </div>
+
+  <!-- 問32 -->
+  <div class="question-block">
+    <div class="question-label">問３２</div>
+    <div class="question-text">問29〜31における障害福祉サービス等一覧以外で、特にどのような支援が必要だと思いますか。<span class="required">（あてはまるもの３つまでに○）</span></div>
+    <div class="options">
+      <label class="option-label"><input type="checkbox" name="q32" value="1"> 話し相手や地域の人の声かけ、訪問</label>
+      <label class="option-label"><input type="checkbox" name="q32" value="2"> ちょっとした不安や困りごとも相談にのってくれる身近な相談サービス</label>
+      <label class="option-label"><input type="checkbox" name="q32" value="3"> 趣味やスポーツなどの集まり</label>
+      <label class="option-label"><input type="checkbox" name="q32" value="4"> 食事の配達サービス</label>
+      <label class="option-label"><input type="checkbox" name="q32" value="5"> 外出の時に自動車で送迎してくれるサービス</label>
+      <label class="option-label"><input type="checkbox" name="q32" value="6"> 買い物など外出に付き添ってくれるサービス</label>
+      <label class="option-label"><input type="checkbox" name="q32" value="7"> 自宅に来てくれる散髪や理美容サービス</label>
+      <label class="option-label"><input type="checkbox" name="q32" value="8"> 特にない</label>
+      <label class="option-label"><input type="checkbox" name="q32" value="9"> その他</label>
+    </div>
+  </div>
+
+  <!-- 自由意見 -->
+  <div class="question-block">
+    <div class="question-label">自由記入欄</div>
+    <div class="question-text">障害福祉サービスや行政の取組について、何かご意見がありましたら、自由にご記入ください。</div>
+    <textarea name="free_comment" placeholder="ご意見をご自由にお書きください。"></textarea>
+  </div>
+
+  <button type="submit" class="btn-submit">回答を送信する</button>
+
+  </form>
+
+  <div class="contact-box">
+    <strong>◎この調査に関するお問い合わせ</strong><br>
+    海南市役所　社会福祉課　障害福祉係<br>
+    電話：073-483-8602（直通）／FAX：073-483-8429<br>
+    <span style="font-size:0.78rem">本調査は、海南市が「株式会社サーベイリサーチセンター大阪事務所」に委託し実施しております。</span>
+  </div>
+
+</div>
+
+<script>
+const q6items = ["食事","トイレ","入浴","衣服の着脱","身だしなみ","家の中の移動","外出","家族以外の人との意思疎通","お金の管理","薬の管理"];
+const tbody = document.getElementById('q6table');
+q6items.forEach((item, i) => {
+  const row = document.createElement('tr');
+  row.innerHTML = `<td>⑩${i+1<=9?'①②③④⑤⑥⑦⑧⑨⑩'.charAt(i*2):'⑩'} ${item}</td>
+    <td><label><input type="radio" name="q6_${i}" value="1" onchange="checkQ6()"></label></td>
+    <td><label><input type="radio" name="q6_${i}" value="2" onchange="checkQ6()"></label></td>
+    <td><label><input type="radio" name="q6_${i}" value="3" onchange="checkQ6()"></label></td>`;
+  const cells = row.querySelectorAll('td');
+  cells[0].textContent = `${['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩'][i]} ${item}`;
+  tbody.appendChild(row);
+});
+
+function checkQ6() {
+  let needsHelp = false;
+  for (let i = 0; i < 10; i++) {
+    const val = document.querySelector(`input[name="q6_${i}"]:checked`);
+    if (val && (val.value === '2' || val.value === '3')) { needsHelp = true; break; }
+  }
+  document.getElementById('q6sub').style.display = needsHelp ? 'block' : 'none';
+}
+
+function showQ14Sub(show) {
+  document.getElementById('q14sub').style.display = show ? 'block' : 'none';
+}
+
+document.getElementById('surveyForm').addEventListener('change', updateProgress);
+
+function updateProgress() {
+  const radios = document.querySelectorAll('input[type="radio"]:checked');
+  const total = 15;
+  const pct = Math.min(100, Math.round((radios.length / total) * 100));
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+const services = [
+  [1,'居宅介護（ホームヘルプ）'],[2,'重度訪問介護'],[3,'同行援護'],[4,'行動援護'],
+  [5,'重度障害者等包括支援'],[6,'施設入所支援'],[7,'短期入所（ショートステイ）'],
+  [8,'療養介護'],[9,'生活介護'],[10,'自立生活援助'],
+  [11,'共同生活援助（グループホーム）'],[12,'自立訓練（機能訓練）'],[13,'自立訓練（生活訓練）'],
+  [14,'就労移行支援'],[15,'就労継続支援（A型）'],[16,'就労継続支援（B型）'],
+  [17,'就労定着支援'],[18,'計画相談支援'],[19,'地域移行支援'],[20,'地域定着支援'],
+  [21,'成年後見制度利用支援'],[22,'手話通訳'],[23,'要約筆記'],
+  [24,'日常生活用具給付'],[25,'住宅改修・改造費助成'],[26,'移動支援'],
+  [27,'日中一時支援'],[28,'自動車運転免許取得助成'],[29,'自動車改造費助成'],
+  [30,'地域活動支援センター事業'],[31,'施設通所交通費助成事業'],[32,'福祉タクシー事業'],
+  [33,'児童発達支援（18歳未満）'],[34,'医療型児童発達支援（18歳未満）'],[35,'放課後等デイサービス（18歳未満）'],
+  [36,'障害児相談支援（18歳未満）'],[37,'居宅訪問型児童発達支援（18歳未満）'],
+  [38,'保育所等訪問支援（18歳未満）'],[39,'福祉型児童入所施設（18歳未満）'],[40,'医療型児童入所施設（18歳未満）']
+];
+
+const svcMap = {};
+services.forEach(([n,l]) => svcMap[n] = l);
+
+const listEl = document.getElementById('serviceListDisplay');
+services.forEach(([n,l]) => {
+  const d = document.createElement('div');
+  d.style.cssText = 'padding:2px 0;';
+  d.textContent = `${n}. ${l}`;
+  if (n >= 33) d.style.color = '#888';
+  listEl.appendChild(d);
+});
+
+function buildServiceSelect(name, placeholder) {
+  const sel = document.createElement('select');
+  sel.name = name;
+  sel.style.cssText = 'width:100%; font-size:0.85rem;';
+  const def = document.createElement('option');
+  def.value = '';
+  def.textContent = placeholder || '― サービスを選択 ―';
+  sel.appendChild(def);
+  services.forEach(([n,l]) => {
+    const o = document.createElement('option');
+    o.value = n;
+    o.textContent = `${n}. ${l}`;
+    sel.appendChild(o);
+  });
+  return sel;
+}
+
+function buildQ29Row(idx) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'border:0.5px solid #d0cdc5; border-radius:8px; padding:0.75rem 1rem; margin-bottom:0.6rem; background:#fafaf8;';
+  wrap.innerHTML = `<div style="font-size:0.82rem; color:#555; margin-bottom:0.4rem;">利用中サービス ${idx}</div>`;
+  const sel = buildServiceSelect(`q29_service_${idx}`, '― サービスを選択（未選択なら空白）―');
+  wrap.appendChild(sel);
+  const plan = document.createElement('div');
+  plan.style.cssText = 'margin-top:0.5rem; display:flex; flex-wrap:wrap; gap:0.4rem;';
+  plan.innerHTML = `<span style="font-size:0.8rem; color:#555; align-self:center; margin-right:4px;">今後３年以内の利用予定：</span>`;
+  ['同じくらい利用する','増やす','減らす','やめる'].forEach((label,vi) => {
+    const l = document.createElement('label');
+    l.style.cssText = 'display:flex; align-items:center; gap:4px; font-size:0.82rem; padding:3px 10px; border:0.5px solid #d0cdc5; border-radius:6px; background:white; cursor:pointer;';
+    l.innerHTML = `<input type="radio" name="q29_plan_${idx}" value="${vi+1}" style="accent-color:#1a4a8a;"> ${label}`;
+    plan.appendChild(l);
+  });
+  wrap.appendChild(plan);
+  return wrap;
+}
+
+function buildQ30Row(idx) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'border:0.5px solid #d0cdc5; border-radius:8px; padding:0.75rem 1rem; margin-bottom:0.6rem; background:#fafaf8;';
+  wrap.innerHTML = `<div style="font-size:0.82rem; color:#555; margin-bottom:0.4rem;">利用できていないサービス ${idx}</div>`;
+  const sel = buildServiceSelect(`q30_service_${idx}`, '― サービスを選択（未選択なら空白）―');
+  wrap.appendChild(sel);
+  const reasons = document.createElement('div');
+  reasons.style.cssText = 'margin-top:0.6rem;';
+  reasons.innerHTML = `<div style="font-size:0.8rem; color:#555; margin-bottom:0.3rem;">現在利用できていない理由（あてはまるものすべてに○）</div>`;
+  const reasonList = [
+    'サービスの対象者に含まれないため（年齢制限・障害支援区分が合致しない等）',
+    'サービスの利用時間が都合に合わないため',
+    '地域にサービス提供場所がないため',
+    '利用料金がかかるため',
+    'その他'
+  ];
+  reasonList.forEach((r,ri) => {
+    const l = document.createElement('label');
+    l.style.cssText = 'display:flex; align-items:flex-start; gap:6px; font-size:0.82rem; padding:4px 8px; margin-bottom:3px; border:0.5px solid #d0cdc5; border-radius:6px; background:white; cursor:pointer;';
+    l.innerHTML = `<input type="checkbox" name="q30_reason_${idx}" value="${ri+1}" style="accent-color:#1a4a8a; margin-top:2px; flex-shrink:0;"> ${r}`;
+    reasons.appendChild(l);
+  });
+  wrap.appendChild(reasons);
+  return wrap;
+}
+
+function buildQ31Row(idx) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'border:0.5px solid #d0cdc5; border-radius:8px; padding:0.6rem 1rem; margin-bottom:0.5rem; background:#fafaf8; display:flex; align-items:center; gap:0.75rem;';
+  const label = document.createElement('span');
+  label.style.cssText = 'font-size:0.82rem; color:#555; white-space:nowrap;';
+  label.textContent = `予定サービス ${idx}`;
+  wrap.appendChild(label);
+  const sel = buildServiceSelect(`q31_service_${idx}`, '― サービスを選択 ―');
+  sel.style.flex = '1';
+  wrap.appendChild(sel);
+  return wrap;
+}
+
+const q29container = document.getElementById('q29rows');
+const q30container = document.getElementById('q30rows');
+const q31container = document.getElementById('q31rows');
+for (let i = 1; i <= 5; i++) {
+  q29container.appendChild(buildQ29Row(i));
+  q30container.appendChild(buildQ30Row(i));
+  q31container.appendChild(buildQ31Row(i));
+}
+
+// ▼▼▼ ここにGoogle Apps ScriptのウェブアプリURLを貼り付けてください ▼▼▼
+const GAS_URL = 'https://script.google.com/macros/s/https://script.google.com/macros/library/d/1NPOk7Vt_W9lgLmfc1X8B2mjPXZdG-3E3l2WP_m9qpx3CSx1IduYnSkU8/2/exec';
+// ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+async function handleSubmit(e) {
+  e.preventDefault();
+
+  // GAS_URLが設定されているか確認
+  if (GAS_URL.includes('ここにURLを貼り付け')) {
+    alert('⚠️ GAS_URLが設定されていません。\nHTMLファイルの「GAS_URL」にGoogle Apps ScriptのURLを貼り付けてください。');
+    return;
+  }
+
+  // ボタンを送信中に変更
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = '送信中...';
+  btn.disabled = true;
+
+  // フォームデータを収集
+  const form = document.getElementById('surveyForm');
+  const formData = new FormData(form);
+  const data = {};
+
+  // チェックボックス（複数選択）を配列としてまとめる
+  for (const [key, value] of formData.entries()) {
+    if (data[key]) {
+      if (Array.isArray(data[key])) {
+        data[key].push(value);
+      } else {
+        data[key] = [data[key], value];
+      }
+    } else {
+      data[key] = value;
+    }
+  }
+
+  try {
+    // Google Apps Scriptに送信
+    // no-corsでもGASが受け取れるようにフォーム形式で送信
+    const formBody = new FormData();
+    formBody.append('payload', JSON.stringify(data));
+
+    await fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formBody
+    });
+
+    // 完了画面に切り替え
+    document.querySelector('.container').innerHTML = `
+      <div style="text-align:center; padding: 4rem 1rem;">
+        <div style="font-size:3rem; margin-bottom:1rem;">✅</div>
+        <h2 style="font-size:1.3rem; font-weight:500; margin-bottom:1rem;">ご回答ありがとうございました</h2>
+        <p style="color:#555; font-size:0.95rem; line-height:1.8">
+          いただいたご意見は、海南市の障害者基本計画・障害福祉計画の策定に活用させていただきます。<br>
+          ご協力に感謝申し上げます。
+        </p>
+      </div>`;
+
+  } catch (error) {
+    btn.textContent = '回答を送信する';
+    btn.disabled = false;
+    alert('送信中にエラーが発生しました。もう一度お試しください。\n' + error.message);
+  }
+}
+</script>
+</body>
+</html>
